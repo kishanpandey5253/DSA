@@ -1,36 +1,37 @@
 class Solution {
-    int dp[] = new int[102];
-    int fun(int i, int end, int[] nums){
-        if (i > end)
+    int[][] dp = new int[102][2];
+    int fun(int i, int[] nums, int f){
+        if(i == nums.length - 1){
+            if (f == 1)
+                return 0;
+
+            return nums[i];
+        }
+
+        if (dp[i][f] != -1)
+            return dp[i][f];
+
+        if(i >= nums.length)
             return 0;
 
-        if (dp[i] != -1)
-            return dp[i];
+        int nf = f;
 
-        int c1 = nums[i] +fun(i+2,end,nums);
-        int c2 = fun(i+1,end,nums);
-
-        dp[i] = Math.max(c1,c2);
-            return dp[i];
-
-    }   
-
-    int solve(int start,int end,int[] nums) {
-
-        for( int i = 0; i<101; i++){
-            dp[i] = -1;
+        if(i == 0){
+            nf = 1;
         }
-        return fun(start,end,nums);
+
+        int rob = nums[i]+fun(i+2,nums,nf);
+        int not_rob = fun(i+1,nums,f);
+
+        return dp[i][f] = Math.max(rob,not_rob);
     }
-
     public int rob(int[] nums) {
+
+        for (int i = 0; i< 102; i++){
+            Arrays.fill(dp[i], -1);
+        }
+
+        return fun(0,nums,0);
         
-        if(nums.length == 1)
-            return nums[0];
-
-        int c1 = solve(0,nums.length - 2,nums);
-        int c2 = solve(1,nums.length - 1,nums);
-
-        return Math.max(c1 , c2);
     }
 }
