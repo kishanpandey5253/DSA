@@ -1,6 +1,8 @@
+import java.util.Arrays;
+
 class Solution {
-    int[][] dp;
     int n;
+    int[][] dp;
 
     int fun(int i, int j, int[][] a) {
         if (j < 0 || j >= n)
@@ -21,12 +23,11 @@ class Solution {
 
     public int minFallingPathSum(int[][] matrix) {
         n = matrix.length;
+
         dp = new int[n][n];
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                dp[i][j] = Integer.MAX_VALUE;
-            }
+        for (int[] row : dp) {
+            Arrays.fill(row, Integer.MAX_VALUE);
         }
 
         int ans = Integer.MAX_VALUE;
